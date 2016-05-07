@@ -19,7 +19,7 @@ setup(
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
     package_data={
-      'pythaiwordcut.data': ['data/*.db'],
+      'pythaiwordcut.data': ['*.db'],
    },
    include_package_data=True
 )
