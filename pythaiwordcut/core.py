@@ -9,7 +9,7 @@ from __future__ import print_function
 import sqlite3
 import re
 
-_DB = 'pythaiwordcut/dictionary.original.db'
+_DB = 'data/dictionary.original.db'
 
 def importToDictionary(filename):
     conn = sqlite3.connect(_DB)
