@@ -3,4 +3,4 @@
 import pythaiwordcut as ptw
 
 # print ptw.search(u'ทดสอบตัดคำ')[1]
-print ptw.segment(u'ทดสอบตัดคำ')
+ptw.segment(u'ทดสอบตัดคำไทย English 1234 ภาษาไทย โหดปะละคับ')

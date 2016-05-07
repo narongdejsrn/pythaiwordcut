@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+#
+# based on algorithm from
+# http://www.aclweb.org/anthology/E14-4016
+#
+
 from __future__ import print_function
 import sqlite3
 
@@ -25,7 +31,7 @@ def search(word):
     maxData = None
     for data in c.execute("SELECT * FROM dictionary WHERE word LIKE '" + word[0] +"%';"):
         if(len(data[1]) > longest):
-            if data[1] in word:
+            if data[1] in word[0:len(data[1])]:
                 longest = len(data[1])
                 maxData = data
 
@@ -49,3 +55,4 @@ def segment(c):
             print (j[1], end='')
             i = i + len(j[1])
         print ('|', end='')
+    print()
