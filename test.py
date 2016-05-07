@@ -2,4 +2,5 @@
 
 import pythaiwordcut as ptw
 
-print ptw.search(u'ทดหกฟ')
+# print ptw.search(u'ทดสอบตัดคำ')[1]
+print ptw.segment(u'ทดสอบตัดคำ')
