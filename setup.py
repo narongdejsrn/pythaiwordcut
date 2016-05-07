@@ -10,12 +10,13 @@ with open('LICENSE') as f:
 
 setup(
     name='pythaiwordcut',
-    version='0.0.1',
+    version='0.0.2',
     description='Simple Thai Wordcut in Python using Maximum Matching',
     long_description=readme,
     author='Narongdej Sarnsuwan',
     author_email='narongdej@sarnsuwan.com',
     url='https://github.com/zenyai/pythaiwordcut',
     license=license,
+    package_data={'pythaiwordcut': ['*.db']}
     packages=find_packages(exclude=('tests', 'docs'))
 )
