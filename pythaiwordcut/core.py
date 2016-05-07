@@ -43,9 +43,6 @@ def search(word, conn):
     longest = 0
     maxData = None
 
-    with open(os.path.join(dir, 'lexitron.txt')) as f:
-        content = f.readlines()
-
     for data in c.execute("SELECT * FROM dictionary WHERE word LIKE '" + word[0] +"%';"):
         if(len(data[1]) > longest):
             if data[1] in word[0:len(data[1])]:
