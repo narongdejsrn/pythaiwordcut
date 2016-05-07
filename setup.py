@@ -10,7 +10,7 @@ with open('LICENSE') as f:
 
 setup(
     name='pythaiwordcut',
-    version='0.0.4',
+    version='0.0.5',
     description='Simple Thai Wordcut in Python using Maximum Matching',
     long_description=readme,
     author='Narongdej Sarnsuwan',

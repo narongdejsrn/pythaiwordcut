@@ -27,7 +27,7 @@ def importToDictionary(filename):
     conn.close()
 
 # Find maximum matching in DB if match return id else return -1
-def search(word):
+def search(word, conn):
     # check latin words
     match = re.search(u"[A-Za-z\d]*", word)
     if match.group(0):
@@ -38,19 +38,20 @@ def search(word):
     if match.group(0):
         return match.group(0)
 
-
-    conn = sqlite3.connect(_DB)
     c = conn.cursor()
 
     longest = 0
     maxData = None
+
+    with open(os.path.join(dir, 'lexitron.txt')) as f:
+        content = f.readlines()
+
     for data in c.execute("SELECT * FROM dictionary WHERE word LIKE '" + word[0] +"%';"):
         if(len(data[1]) > longest):
             if data[1] in word[0:len(data[1])]:
                 longest = len(data[1])
                 maxData = data
 
-    conn.close()
     if maxData:
         return maxData[1]
     else:
@@ -58,12 +59,12 @@ def search(word):
 
 # c = sentence which represent as char
 # N = number of character
-def segment(c):
+def find_segment(c, conn):
     i = 0
     N = len(c)
     arr = []
     while(i < N):
-        j = search(c[i:N])
+        j = search(c[i:N], conn)
         if(j == -1):
             arr.append(c[i])
             i = i + 1
@@ -72,3 +73,13 @@ def segment(c):
             i = i + len(j)
         # print ('|', end='')
     return arr;
+
+class wordcut(object):
+    def __init__(self):
+        self.conn = sqlite3.connect(_DB)
+
+    def segment(self, c):
+        return find_segment(c, self.conn)
+
+    def close(self):
+        self.conn.close()
