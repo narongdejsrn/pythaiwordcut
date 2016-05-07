@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pythaiwordcut as ptw
 
-ptw.test()
+ptw.wordcut(u'ทด')
