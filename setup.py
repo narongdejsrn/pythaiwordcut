@@ -17,6 +17,8 @@ setup(
     author_email='narongdej@sarnsuwan.com',
     url='https://github.com/zenyai/pythaiwordcut',
     license=license,
-    package_data={'pythaiwordcut': ['*.db']},
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs')),
+    package_data={
+      'pythaiwordcut.data': ['data/*.db'],
+   }
 )
