@@ -42,8 +42,9 @@ def search(word, conn):
 
     longest = 0
     maxData = None
+    dword = word[0]+'%'
 
-    for data in c.execute("SELECT * FROM dictionary WHERE word LIKE '{0}%';".format(word[0].encode('utf-8'))):
+    for data in c.execute("SELECT * FROM dictionary WHERE word LIKE ?", (dword,)):
         if(len(data[1]) > longest):
             if data[1] in word[0:len(data[1])]:
                 longest = len(data[1])
