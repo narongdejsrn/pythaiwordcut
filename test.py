@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import pythaiwordcut as ptw
-import time
 
 # print ptw.search(u'ทดสอบตัดคำ')[1]
 import time
