@@ -28,7 +28,6 @@ def importToDictionary(filename):
 
 # Find maximum matching in DB if match return id else return -1
 def search(word):
-
     # check latin words
     match = re.search(u"[A-Za-z\d]*", word)
     if match.group(0):
@@ -62,13 +61,14 @@ def search(word):
 def segment(c):
     i = 0
     N = len(c)
+    arr = []
     while(i < N):
         j = search(c[i:N])
         if(j == -1):
-            print (c[i], end='')
+            arr.append(c[i])
             i = i + 1
         else:
-            print (j, end='')
+            arr.append(j)
             i = i + len(j)
-        print ('|', end='')
-    print()
+        # print ('|', end='')
+    return arr;
