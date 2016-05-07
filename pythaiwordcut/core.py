@@ -12,7 +12,7 @@ import re
 
 import os
 dir = os.path.dirname(__file__)
-_DB = os.path.join(dir, '../data/dictionary.original.db')
+_DB = os.path.join(dir, 'dictionary.original.db')
 
 def importToDictionary(filename):
     conn = sqlite3.connect(_DB)
