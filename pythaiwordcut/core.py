@@ -16,9 +16,17 @@ def importToDictionary(filename):
 
     conn.close()
 
-def wordcut(sentence):
+# Find in DB if match return id else return -1
+def search(word):
     conn = sqlite3.connect(_DB)
     c = conn.cursor()
-    for data in c.execute("SELECT * FROM dictionary WHERE word LIKE '" + sentence + "%';"):
-        print data
+    c.execute("SELECT id FROM dictionary WHERE word = '%s' LIMIT 1;" % word)
+    data = c.fetchone()
     conn.close()
+    if data:
+        return data[0]
+    else:
+        return -1;
+
+def segment(c, N, t):
+    pass

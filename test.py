@@ -2,4 +2,4 @@
 
 import pythaiwordcut as ptw
 
-ptw.wordcut(u'ทด')
+print ptw.search(u'ทดหกฟ')
