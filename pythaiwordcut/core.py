@@ -9,7 +9,10 @@ from __future__ import print_function
 import sqlite3
 import re
 
-_DB = 'data/dictionary.original.db'
+
+import os
+dir = os.path.dirname(__file__)
+_DB = os.path.join(dir, '../data/dictionary.original.db')
 
 def importToDictionary(filename):
     conn = sqlite3.connect(_DB)
