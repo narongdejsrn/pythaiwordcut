@@ -7,6 +7,7 @@
 
 from __future__ import print_function
 import sqlite3
+import re
 
 _DB = 'pythaiwordcut/dictionary.original.db'
 
@@ -24,6 +25,18 @@ def importToDictionary(filename):
 
 # Find maximum matching in DB if match return id else return -1
 def search(word):
+
+    # check latin words
+    match = re.search(u"[A-Za-z\d]*", word)
+    if match.group(0):
+        return match.group(0)
+
+    # check number
+    match = re.search(u"[\d]*", word)
+    if match.group(0):
+        return match.group(0)
+
+
     conn = sqlite3.connect(_DB)
     c = conn.cursor()
 
@@ -37,7 +50,7 @@ def search(word):
 
     conn.close()
     if maxData:
-        return maxData
+        return maxData[1]
     else:
         return -1;
 
@@ -52,7 +65,7 @@ def segment(c):
             print (c[i], end='')
             i = i + 1
         else:
-            print (j[1], end='')
-            i = i + len(j[1])
+            print (j, end='')
+            i = i + len(j)
         print ('|', end='')
     print()
