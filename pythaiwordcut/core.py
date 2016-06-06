@@ -34,6 +34,7 @@ def searchTrie(word, trie):
                 maxData = data
     if maxData:
         try:
+            # Special check for case like ๆ
             if word[len(maxData)] == u'ๆ':
                 return word[0:(len(maxData) + 1)]
             else:

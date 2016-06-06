@@ -20,7 +20,7 @@ setup(
     license="MIT",
     packages=find_packages(exclude=('tests', 'docs')),
     package_data={
-      '': ['*.db']
+      '': ['*.txt']
    },
    zip_safe=False,
    install_requires=required,
