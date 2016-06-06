@@ -6,6 +6,8 @@ import os, sys
 with open('README.md') as f:
     readme = f.read()
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup(
     name='pythaiwordcut',
@@ -21,5 +23,6 @@ setup(
       '': ['*.db']
    },
    zip_safe=False,
+   install_requires=required,
    include_package_data=True
 )
