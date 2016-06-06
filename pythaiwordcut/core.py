@@ -27,14 +27,19 @@ def searchTrie(word, trie):
     longest = 0
     maxData = None
 
-    for data in trie.keys(word[0]):
+    for data in trie.keys(word[0:1]):
         if(len(data) > longest):
             if data in word[0:len(data)]:
                 longest = len(data)
                 maxData = data
-
     if maxData:
-        return maxData
+        try:
+            if word[len(maxData)] == u'ๆ':
+                return word[0:(len(maxData) + 1)]
+            else:
+                return maxData
+        except:
+            return maxData
     else:
         return -1;
 
