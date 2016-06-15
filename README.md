@@ -3,7 +3,7 @@
 A simple Thai wordcut written in Python, based on Maximum Matching algorithm by [S. Manabu](http://www.aclweb.org/anthology/E14-4016)
 . Uses Lexitron (by [NECTEC](http://www.sansarn.com/lexto/license-lexitron.php)) dictionary as default
 
-> ** Please note: ** This project is under development and should not be use in production , all function and interface are subject to change. If you have issue or suggestion please feel free to ask, contribution is also very welcome :)
+> Please note: This project is under development and should not be use in production , all function and interface are subject to change. If you have issue or suggestion please feel free to ask, contribution is also very welcome :)
 
 ## Installation
 

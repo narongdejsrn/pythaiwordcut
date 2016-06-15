@@ -1,2 +1,4 @@
+include *.txt
+include *.md
 recursive-include pythaiwordcut/dict *
 recursive-include pythaiwordcut/stopword *

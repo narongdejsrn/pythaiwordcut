@@ -9,14 +9,11 @@ from __future__ import print_function
 import re
 import marisa_trie
 import os, glob
-# _DB_FILE = os.path.join(dir, 'dict/lexitron.txt')
 
 class wordcut(object):
     def __init__(self, removeRepeat=True, stopword=False, removeSpaces=True, minLength=1, stopNumber=False):
         d = []
         dir = os.path.dirname(__file__)
-
-        print(dir)
 
         # load dictionary
         for file in [f for f in os.listdir(dir + '/dict/') if f.endswith('.txt')]:
