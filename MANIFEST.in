@@ -1,1 +1,2 @@
-include pythaiwordcut/dictionary.original.db
+recursive-include pythaiwordcut/dict *
+recursive-include pythaiwordcut/stopword *

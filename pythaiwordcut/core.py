@@ -16,18 +16,18 @@ class wordcut(object):
         d = []
         dir = os.path.dirname(__file__)
 
+        print(dir)
+
         # load dictionary
-        os.chdir(dir + '/dict/')
-        for file in glob.glob("*.txt"):
-            with open(file) as f:
+        for file in [f for f in os.listdir(dir + '/dict/') if f.endswith('.txt')]:
+            with open(dir + '/dict/' + file) as f:
                 for line in f:
                     d.append(line.decode('utf-8').rstrip())
 
         self.stopdict = []
         if(stopword):
-            os.chdir(dir + '/stopword/')
-            for file in glob.glob("*.txt"):
-                with open(file) as f:
+            for file in [f for f in os.listdir(dir + '/stopword/') if f.endswith('.txt')]:
+                with open(dir + '/stopword/' + file) as f:
                     for line in f:
                         self.stopdict.append(line.decode('utf-8').rstrip())
 
@@ -88,6 +88,8 @@ class wordcut(object):
                 wordArray.remove(dd)
             except ValueError:
                 pass
+
+        return wordArray
 
     # c = sentence which represent as char
     # N = number of character
