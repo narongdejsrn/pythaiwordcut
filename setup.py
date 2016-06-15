@@ -11,7 +11,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='pythaiwordcut',
-    version='0.0.9',
+    version='0.1.0',
     description='Simple Thai Wordcut in Python using Maximum Matching',
     long_description=readme,
     author='Narongdej Sarnsuwan',
@@ -20,7 +20,7 @@ setup(
     license="MIT",
     packages=find_packages(exclude=('tests', 'docs')),
     package_data={
-      '': ['*.txt']
+      '': ['dict/*.txt', 'stopword/*.txt']
    },
    zip_safe=False,
    install_requires=required,

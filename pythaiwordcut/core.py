@@ -8,69 +8,110 @@
 from __future__ import print_function
 import re
 import marisa_trie
-import os
-dir = os.path.dirname(__file__)
-_DB_FILE = os.path.join(dir, 'lexitron.txt')
-
-# Find maximum matching in Trie if match return id else return -1
-def searchTrie(word, trie):
-    # check latin words
-    match = re.search(u"[A-Za-z\d]*", word)
-    if match.group(0):
-        return match.group(0)
-
-    # check number
-    match = re.search(u"[\d]*", word)
-    if match.group(0):
-        return match.group(0)
-
-    longest = 0
-    maxData = None
-
-    for data in trie.keys(word[0:1]):
-        if(len(data) > longest):
-            if data in word[0:len(data)]:
-                longest = len(data)
-                maxData = data
-    if maxData:
-        try:
-            # Special check for case like ๆ
-            if word[len(maxData)] == u'ๆ':
-                return word[0:(len(maxData) + 1)]
-            else:
-                return maxData
-        except:
-            return maxData
-    else:
-        return -1;
-
-# c = sentence which represent as char
-# N = number of character
-def find_segment(c, trie):
-    i = 0
-    N = len(c)
-    arr = []
-    while(i < N):
-        j = searchTrie(c[i:N], trie)
-        if(j == -1):
-            arr.append(c[i])
-            i = i + 1
-        else:
-            arr.append(j)
-            i = i + len(j)
-    return arr;
+import os, glob
+# _DB_FILE = os.path.join(dir, 'dict/lexitron.txt')
 
 class wordcut(object):
-    def __init__(self):
+    def __init__(self, removeRepeat=True, stopword=False, removeSpaces=True, minLength=1, stopNumber=False):
         d = []
-        with open(_DB_FILE) as f:
-            for line in f:
-                d.append(line.decode('utf-8').rstrip())
+        dir = os.path.dirname(__file__)
 
+        # load dictionary
+        os.chdir(dir + '/dict/')
+        for file in glob.glob("*.txt"):
+            with open(file) as f:
+                for line in f:
+                    d.append(line.decode('utf-8').rstrip())
+
+        self.stopdict = []
+        if(stopword):
+            os.chdir(dir + '/stopword/')
+            for file in glob.glob("*.txt"):
+                with open(file) as f:
+                    for line in f:
+                        self.stopdict.append(line.decode('utf-8').rstrip())
+
+        self.stopword = stopword
         self.trie = marisa_trie.Trie(d)
+        self.removeRepeat = removeRepeat
+        self.stopNumber = stopNumber
+        self.removeSpaces = removeSpaces
+        self.minLength = minLength
+
+    def determine(self, word):
+        if self.stopNumber and word.isdigit():
+            return False
+
+        if self.removeSpaces and word.isspace():
+            return False
+
+        if len(word) < self.minLength:
+            return False
+
+        return True
+
+    # Find maximum matching in Trie if match return id else return -1
+    def searchTrie(self, word):
+        # check latin words
+        match = re.search(u"[A-Za-z\d]*", word)
+        if match.group(0):
+            return match.group(0)
+
+        # check number
+        match = re.search(u"[\d]*", word)
+        if match.group(0):
+            return match.group(0)
+
+        longest = 0
+        maxData = None
+
+        for data in self.trie.keys(word[0:1]):
+            if(len(data) > longest):
+                if data in word[0:len(data)]:
+                    longest = len(data)
+                    maxData = data
+        if maxData:
+            try:
+                # Special check for case like ๆ
+                if word[len(maxData)] == u'ๆ':
+                    return word[0:(len(maxData) + 1)]
+                else:
+                    return maxData
+            except:
+                return maxData
+        else:
+            return -1;
+
+    def transform(self, wordArray):
+        for dd in self.stopdict:
+            try:
+                wordArray.remove(dd)
+            except ValueError:
+                pass
+
+    # c = sentence which represent as char
+    # N = number of character
+    def find_segment(self, c):
+        i = 0
+        N = len(c)
+        arr = []
+        while(i < N):
+            j = self.searchTrie(c[i:N])
+            if(j == -1):
+                if(self.removeRepeat is False or c[i] != c[i - 1]):
+                    arr.append(c[i])
+                    i = i + 1
+                else:
+                    i = i + 1
+            else:
+                arr.append(j)
+                i = i + len(j)
+        return arr;
 
     def segment(self, c):
-        return find_segment(c, self.trie)
+        result = self.find_segment(c)
+        if self.stopword:
+            result = self.transform(result)
 
-    def close(self):
-        self.conn.close()
+        result = [x for x in result if self.determine(x)]
+        return result
