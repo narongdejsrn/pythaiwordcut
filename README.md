@@ -22,12 +22,12 @@ python setup.py install
 ```
 import pythaiwordcut as pwt
 
-pt = pwt.wordcut(removeRepeat=True, stopword=False, removeSpaces=True, minLength=1, stopNumber=False)
+pt = pwt.wordcut(removeRepeat=True, stopDictionary="<full path to txt file>", removeSpaces=True, minLength=1, stopNumber=False)
 print "|".join(pt.segment(u'ทดสอบการตัดคำ'))
 ```
 
 * removeRepeat: remove intention insertion spelling error such as (สบายยยยยย)
-* stopword: remove word that doesn't add sentiment value
+* stopDictionary: remove word that exist in this specify text file (one word one line)
 * removeSpaces: remove blank space
 * minLength: minimum length of each word
 * stopNumber: remove number if exist

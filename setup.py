@@ -20,7 +20,7 @@ setup(
     license="MIT",
     packages=find_packages(exclude=('tests', 'docs')),
     package_data={
-      '': ['dict/*.txt', 'stopword/*.txt']
+      '': ['dict/*.txt']
    },
    zip_safe=False,
    install_requires=required,

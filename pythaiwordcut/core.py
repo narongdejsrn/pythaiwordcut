@@ -11,7 +11,7 @@ import marisa_trie
 import os, glob
 
 class wordcut(object):
-    def __init__(self, removeRepeat=True, stopword=False, removeSpaces=True, minLength=1, stopNumber=False):
+    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False):
         d = []
         dir = os.path.dirname(__file__)
 
@@ -21,14 +21,14 @@ class wordcut(object):
                 for line in f:
                     d.append(line.decode('utf-8').rstrip())
 
+        self.stopword = False
         self.stopdict = []
-        if(stopword):
-            for file in [f for f in os.listdir(dir + '/stopword/') if f.endswith('.txt')]:
-                with open(dir + '/stopword/' + file) as f:
-                    for line in f:
-                        self.stopdict.append(line.decode('utf-8').rstrip())
+        if(stopDictionary is not ""):
+            self.stopword = True
+            with open(stopDictionary) as f:
+                for line in f:
+                    self.stopdict.append(line.decode('utf-8').rstrip())
 
-        self.stopword = stopword
         self.trie = marisa_trie.Trie(d)
         self.removeRepeat = removeRepeat
         self.stopNumber = stopNumber
