@@ -47,7 +47,7 @@ class wordcut(object):
             return False
 
         if self.removeNonCharacter:
-            match = re.search(u"[A-Za-z\u0E00-\u0E7F]+", word)
+            match = re.search(u"[0-9A-Za-z\u0E00-\u0E7F]+", word)
             if not match:
                 return False
 
