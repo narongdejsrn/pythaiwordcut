@@ -11,7 +11,7 @@ import marisa_trie
 import os, glob
 
 class wordcut(object):
-    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=1):
+    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=(1,1)):
         d = []
         dir = os.path.dirname(__file__)
 
@@ -132,7 +132,11 @@ class wordcut(object):
         result = [x for x in result if self.determine(x)]
 
         lastresult = []
-        for x in xrange(self.ngram + 1):
+        for x in xrange(self.ngram[0], self.ngram[1]+1):
             for r in self.find_ngrams(result, x):
-                lastresult.append(''.join(r))
+                match = re.search(u"[A-Za-z\d]+", ''.join(r))
+                if not match:
+                    lastresult.append(''.join(r))
+                else:
+                    lastresult.append(' '.join(r))
         return lastresult
