@@ -11,7 +11,7 @@ import marisa_trie
 import os, glob
 
 class wordcut(object):
-    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False):
+    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True):
         d = []
         dir = os.path.dirname(__file__)
 
@@ -35,6 +35,7 @@ class wordcut(object):
         self.removeSpaces = removeSpaces
         self.minLength = minLength
         self.removeNonCharacter = removeNonCharacter
+        self.caseSensitive = caseSensitive
 
     def determine(self, word):
         if self.stopNumber and word.isdigit():
@@ -58,7 +59,10 @@ class wordcut(object):
         # check latin words
         match = re.search(u"[A-Za-z\d]*", word)
         if match.group(0):
-            return match.group(0)
+            if not self.caseSensitive:
+                return match.group(0).lower()
+            else:
+                return match.group(0)
 
         # check number
         match = re.search(u"[\d]*", word)
@@ -88,7 +92,10 @@ class wordcut(object):
     def transform(self, wordArray):
         for dd in self.stopdict:
             try:
-                wordArray.remove(dd)
+                if self.caseSensitive:
+                    wordArray.remove(dd)
+                else:
+                    wordArray.remove(dd.lower())
             except ValueError:
                 pass
 
