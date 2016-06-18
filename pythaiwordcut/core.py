@@ -11,7 +11,7 @@ import marisa_trie
 import os, glob
 
 class wordcut(object):
-    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True):
+    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=1):
         d = []
         dir = os.path.dirname(__file__)
 
@@ -36,6 +36,7 @@ class wordcut(object):
         self.minLength = minLength
         self.removeNonCharacter = removeNonCharacter
         self.caseSensitive = caseSensitive
+        self.ngram = ngram
 
     def determine(self, word):
         if self.stopNumber and word.isdigit():
@@ -120,10 +121,18 @@ class wordcut(object):
                 i = i + len(j)
         return arr;
 
+    def find_ngrams(self, input_list, n):
+        return zip(*[input_list[i:] for i in range(n)])
+
     def segment(self, c):
         result = self.find_segment(c)
         if self.stopword:
             result = self.transform(result)
 
         result = [x for x in result if self.determine(x)]
-        return result
+
+        lastresult = []
+        for x in xrange(self.ngram + 1):
+            for r in self.find_ngrams(result, x):
+                lastresult.append(''.join(r))
+        return lastresult
