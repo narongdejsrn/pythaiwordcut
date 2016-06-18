@@ -11,7 +11,7 @@ import marisa_trie
 import os, glob
 
 class wordcut(object):
-    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False):
+    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False):
         d = []
         dir = os.path.dirname(__file__)
 
@@ -34,6 +34,7 @@ class wordcut(object):
         self.stopNumber = stopNumber
         self.removeSpaces = removeSpaces
         self.minLength = minLength
+        self.removeNonCharacter = removeNonCharacter
 
     def determine(self, word):
         if self.stopNumber and word.isdigit():
@@ -44,6 +45,11 @@ class wordcut(object):
 
         if len(word) < self.minLength:
             return False
+
+        if self.removeNonCharacter:
+            match = re.search(u"[A-Za-z\u0E00-\u0E7F]+", word)
+            if not match:
+                return False
 
         return True
 
