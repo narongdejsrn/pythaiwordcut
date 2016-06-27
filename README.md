@@ -22,7 +22,7 @@ python setup.py install
 ```
 import pythaiwordcut as pwt
 
-pt = pwt.wordcut(removeRepeat=True, stopDictionary="<full path to txt file>", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=(1, 2))
+pt = pwt.wordcut(removeRepeat=True, stopDictionary="<full path to txt file>", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=(1, 2), negation=False)
 print "|".join(pt.segment(u'ทดสอบการตัดคำ'))
 ```
 
@@ -34,3 +34,4 @@ print "|".join(pt.segment(u'ทดสอบการตัดคำ'))
 * removeNonCharacter: remove character that are not Thai or English character
 * caseSensitive: if set to false, will remove stop word without regarding the case
 * ngram: Add word ngram from (1, 2)
+* negation: If set to true, then it will add NOT_ to every word after negation word and space

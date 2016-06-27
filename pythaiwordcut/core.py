@@ -11,7 +11,7 @@ import marisa_trie
 import os, glob
 
 class wordcut(object):
-    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=(1,1)):
+    def __init__(self, removeRepeat=True, stopDictionary="", removeSpaces=True, minLength=1, stopNumber=False, removeNonCharacter=False, caseSensitive=True, ngram=(1,1), negation=False):
         d = []
         dir = os.path.dirname(__file__)
 
@@ -20,6 +20,13 @@ class wordcut(object):
             with open(dir + '/dict/' + file) as f:
                 for line in f:
                     d.append(line.decode('utf-8').rstrip())
+
+        # load negation listdir
+        self.negationDict = []
+        if negation:
+            with open(dir + '/dict/negation.txt') as f:
+                for line in f:
+                    self.negationDict.append(line.decode('utf-8').rstrip())
 
         self.stopword = False
         self.stopdict = []
@@ -37,6 +44,8 @@ class wordcut(object):
         self.removeNonCharacter = removeNonCharacter
         self.caseSensitive = caseSensitive
         self.ngram = ngram
+        self.negation = negation
+        self.onNegation = False
 
     def determine(self, word):
         if self.stopNumber and word.isdigit():
@@ -57,6 +66,10 @@ class wordcut(object):
 
     # Find maximum matching in Trie if match return id else return -1
     def searchTrie(self, word):
+        # remove negation if see a space
+        if(word[0:1] == " "):
+            self.onNegation = False
+
         # check latin words
         match = re.search(u"[A-Za-z\d]*", word)
         if match.group(0):
@@ -117,7 +130,15 @@ class wordcut(object):
                 else:
                     i = i + 1
             else:
-                arr.append(j)
+                k = j
+                if self.negation:
+                    if self.onNegation:
+                        k = 'NOT_' + j
+
+                    if j in self.negationDict:
+                        self.onNegation = True
+
+                arr.append(k)
                 i = i + len(j)
         return arr;
 
@@ -138,5 +159,8 @@ class wordcut(object):
                 if not match:
                     lastresult.append(''.join(r))
                 else:
-                    lastresult.append(' '.join(r))
+                    if self.negation:
+                        lastresult.append(''.join(r))
+                    else:
+                        lastresult.append(' '.join(r))
         return lastresult
