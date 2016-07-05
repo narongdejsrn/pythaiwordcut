@@ -86,11 +86,18 @@ class wordcut(object):
         longest = 0
         maxData = None
 
-        for data in self.trie.keys(word[0:1]):
-            if(len(data) > longest):
-                if data in word[0:len(data)]:
-                    longest = len(data)
-                    maxData = data
+        wordLength = 10
+
+        while wordLength >= 1:
+            for data in self.trie.keys(word[0:wordLength]):
+                if(len(data) > longest):
+                    if data in word[0:len(data)]:
+                        wordLength = 0
+                        longest = len(data)
+                        maxData = data
+
+            wordLength -= 1
+
         if maxData:
             try:
                 # Special check for case like ๆ
