@@ -2,7 +2,6 @@
 
 from setuptools import setup, find_packages
 import os, sys
-from Cython.Build import cythonize
 
 with open('README.md') as f:
     readme = f.read()
@@ -12,7 +11,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='pythaiwordcut',
-    version='0.1.13',
+    version='0.1.14',
     description='Simple Thai Wordcut in Python using Maximum Matching',
     long_description=readme,
     author='Narongdej Sarnsuwan',
