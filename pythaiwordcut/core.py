@@ -86,17 +86,19 @@ class wordcut(object):
         longest = 0
         maxData = None
 
-        wordLength = 10
+        for x in range(20):
+            if word[0:x] in self.trie:
+                longest = len(word[0:x])
+                maxData = word[0:x]
 
-        while wordLength >= 1:
-            for data in self.trie.keys(word[0:wordLength]):
+        if longest > 20:
+            for data in self.trie.keys(word[0:longest]):
                 if(len(data) > longest):
                     if data in word[0:len(data)]:
                         wordLength = 0
                         longest = len(data)
                         maxData = data
 
-            wordLength -= 1
 
         if maxData:
             try:

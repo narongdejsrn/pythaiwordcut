@@ -2,6 +2,7 @@
 
 from setuptools import setup, find_packages
 import os, sys
+from Cython.Build import cythonize
 
 with open('README.md') as f:
     readme = f.read()
