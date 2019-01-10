@@ -16,7 +16,7 @@ class wordcut(object):
         dir = os.path.dirname(__file__)
 
         # load dictionary
-        for file in [f for f in os.listdir(dir + '/dict/') if f.endswith('.txt')]:
+        for file in [f for f in os.listdir(dir + '/dict/', 'rb') if f.endswith('.txt')]:
             with open(dir + '/dict/' + file) as f:
                 for line in f:
                     d.append(line.decode('utf-8').rstrip())
