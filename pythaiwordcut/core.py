@@ -162,7 +162,7 @@ class wordcut(object):
         result = [x for x in result if self.determine(x)]
 
         lastresult = []
-        for x in xrange(self.ngram[0], self.ngram[1]+1):
+        for x in range(self.ngram[0], self.ngram[1]+1):
             for r in self.find_ngrams(result, x):
                 match = re.search(u"[A-Za-z\d]+", ''.join(r))
                 if not match:
