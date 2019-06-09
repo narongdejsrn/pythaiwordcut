@@ -11,7 +11,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='pythaiwordcut',
-    version='0.1.15',
+    version='0.2.0',
     description='Simple Thai Wordcut in Python using Maximum Matching',
     long_description=readme,
     author='Narongdej Sarnsuwan',
@@ -24,5 +24,6 @@ setup(
     },
     zip_safe=False,
     install_requires=required,
-    include_package_data=True
+    include_package_data=True,
+    python_requires='>3.5.0'
 )
