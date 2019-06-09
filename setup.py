@@ -13,6 +13,7 @@ setup(
     version='0.2.0',
     description='Simple Thai Wordcut in Python using Maximum Matching',
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Narongdej Sarnsuwan',
     author_email='narongdej@sarnsuwan.com',
     url='https://github.com/narongdejsrn/pythaiwordcut',
